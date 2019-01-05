@@ -47,8 +47,11 @@ eval $(thefuck --alias)
 emulate sh -c 'source /etc/profile.d/apps-bin-path.sh'
 
 
-###################FUNCTIONS################################
-
+###################POWERLINE################################
+export DEFAULT_USER=$USER
+# not currently being used, but necessary to display the right user context in my prompt
+POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir vcs)
+POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status root_indicator background_jobs virtualenv time)
 
 ############SDKMAN##########################################
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!

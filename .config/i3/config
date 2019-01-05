@@ -3,9 +3,10 @@ for_window [class="^.*"] border pixel 1
 
 # i3 Gaps
 gaps inner 1
-gaps outer 0
+gaps outer 1
 smart_gaps on
 smart_borders on
+hide_edge_borders smart
 
 # Autofocus on mouse hover
 focus_follows_mouse yes
@@ -16,39 +17,23 @@ popup_during_fullscreen smart
 # Pressing $mod and current workspace number takes you back to the previousle active workspace
 workspace_auto_back_and_forth yes
 
-
+set $ws1 workspace 1
+set $ws2 workspace 2
+set $ws3 workspace 3
+set $ws4 workspace 4
+set $ws5 workspace 5
+set $ws6 workspace 6
+set $ws7 workspace 7
+set $ws8 workspace 8
+set $ws9 workspace 9
+set $ws10 workspace 10
 # Variables
 set $mod Mod4
 set $host "pilog://"
 set $command_open xdg-open
-# Assign workspaces to screens
-# change accordingly, HDMI-2->first display, while HDMI-1 is vertical display
-workspace 1 output HDMI-2
-workspace 2 output HDMI-2
-workspace 3 output HDMI-2
-workspace 4 output HDMI-1
-workspace 5 output HDMI-1
-workspace 6 output HDMI-1
 
-# Assign applications to specific workspaces
-#  xprop | grep "CLASS" to get the class
-## browser
-assign [class="Firefox"] 1
-assign [class="Chromium-browser"] 1
-assign [class="Midori"] 6
 
-## texteditors
-assign [class="Sublime_text"] 4
-
-## IDE
-# it should be assigned before android studio to be effective
-assign [title="Preview - .*"] 5
-assign [class="jetbrains-studio"] 3
-
-## tools
-# assign [class="Terminator"] 2
-assign [class="Zeal"] 4
-
+hide_edge_borders vertical
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
 font pango:Helvetica Neue, FontAwesome 11
@@ -61,47 +46,84 @@ font pango:Helvetica Neue, FontAwesome 11
 floating_modifier $mod
 
 
-# BindKeys: Control Windows
+# Assign workspaces to screens
+# change accordingly, HDMI-2->first display, while HDMI-1 is vertical display
+$ws1 output HDMI-2
+$ws2 output HDMI-2
+$ws3 output HDMI-2
+$ws4 output HDMI-1
+$ws5 output HDMI-1
+$ws6 output HDMI-1
+$ws7 output HDMI-1
+$ws8 output HDMI-1
+$ws9 output HDMI-2
+$ws10 output HDMI-2
+
+# Assign applications to specific workspaces
+#  xprop | grep "CLASS" to get the class
+## browser
+assign [class="Firefox"] $ws1
+assign [class="Chromium-browser"] $ws1
+assign [class="Midori"] $ws6
+
+## texteditors
+assign [class="Sublime_text"] $ws4
+
+## IDE
+# it should be assigned before android studio to be effective
+assign [title="Preview - .*"] $ws5
+assign [class="jetbrains-studio"] $ws3
+# programming
+assign [title="Android Emulator .*"] $ws6
+assign [title="Emulator"] $ws6
+
+
+## tools
+# assign [class="Terminator"] $sw2
+assign [class="Zeal"] $ws4
+assign [class="keepassxc"] $ws8
+
+
+
+# BindKeys: Control Windows#####################################
 ## change focus on windows
-
-bindsym Control+grave  exec --no-startup-id terminator --command="python ~/Development/tools/i3-scripts/workspace-monitor-left.py up HDMI-1"
-
+bindsym Control+F1 exec --no-startup-id terminator --command="python ~/Development/tools/i3-scripts/workspace-monitor-left.py up HDMI-1"
 
 ######### BindKeys: Switch workspace
-bindsym $mod+c workspace 5, workspace 3
-bindsym $mod+z workspace 4, workspace 1
+bindsym $mod+c $ws5, $ws3
+bindsym $mod+z $ws4, $ws1
 
 # switch to workspace
-bindsym $mod+1 workspace 1
-bindsym $mod+2 workspace 2
-bindsym $mod+3 workspace 3
-bindsym $mod+4 workspace 4
-bindsym $mod+5 workspace 5
-bindsym $mod+6 workspace 6
-bindsym $mod+7 workspace 7
-bindsym $mod+8 workspace 8
-bindsym $mod+9 workspace 9
-bindsym $mod+0 workspace 10
+bindsym $mod+1 $ws1
+bindsym $mod+2 $ws2
+bindsym $mod+3 $ws3
+bindsym $mod+4 $ws4
+bindsym $mod+5 $ws5
+bindsym $mod+6 $ws6
+bindsym $mod+7 $ws7
+bindsym $mod+8 $ws8
+bindsym $mod+9 $ws9
+bindsym $mod+0 $ws10
 
 # move focused container to workspace
-bindsym $mod+Shift+1 move container to workspace 1; workspace 1
-bindsym $mod+Shift+2 move container to workspace 2
-bindsym $mod+Shift+3 move container to workspace 3
-bindsym $mod+Shift+4 move container to workspace 4
-bindsym $mod+Shift+5 move container to workspace 5
-bindsym $mod+Shift+6 move container to workspace 6
-bindsym $mod+Shift+7 move container to workspace 7
-bindsym $mod+Shift+8 move container to workspace 8
-bindsym $mod+Shift+9 move container to workspace 9
-bindsym $mod+Shift+0 move container to workspace 10
+bindsym $mod+Shift+1 move container to $ws1; $ws1
+bindsym $mod+Shift+2 move container to $ws2
+bindsym $mod+Shift+3 move container to $ws3
+bindsym $mod+Shift+4 move container to $ws4
+bindsym $mod+Shift+5 move container to $ws5
+bindsym $mod+Shift+6 move container to $ws6
+bindsym $mod+Shift+7 move container to $ws7
+bindsym $mod+Shift+8 move container to $ws8
+bindsym $mod+Shift+9 move container to $ws9
+bindsym $mod+Shift+0 move container to $ws10
 
 # bindsym: other wndow controls
 # Kill focused window
 bindsym $mod+q kill
 
 # switch worksace : keyboard
-bindsym $mod+Tab workspace next
-bindsym $mod+Shift+Tab workspace prev
+bindsym $mod+Tab workspace next_on_output
+bindsym $mod+Shift+Tab workspace prev_on_output
 
 # switch worksace : mouse
 bindsym --whole-window $mod+button4 workspace next_on_output
@@ -151,6 +173,8 @@ bindsym $mod+b [urgent=latest] focus
 
 # Terminal
 bindsym Control+mod1+t exec --no-startup-id terminator
+bindsym $mod+Shift+t split toggle,exec --no-startup-id terminator, focus
+
 
 # Desktop
 bindsym $mod+e exec --no-startup-id "XDG_CURRENT_DESKTOP=kde dolphin"
@@ -159,20 +183,29 @@ bindsym $mod+e exec --no-startup-id "XDG_CURRENT_DESKTOP=kde dolphin"
 ## rofi
 bindsym $mod+d exec --no-startup-id i3-dmenu-desktop --dmenu=''
 # rofi bindings
-bindsym F9  exec "rofi -show-icons -modi combi -show combi -combi-modi run,drun"
-
-
+#bindsym F9  exec "rofi -show-icons -modi combi -show combi -combi-modi run,drun"
+bindsym $mod+shift+a [class="Anki"] scratchpad show, move position center
+bindsym $mod+shift+w [title="musicforprogramming.net"] floating enable resize set 640 480,scratchpad show, move position center
 ## I3 tools
 # Launch Layout Manager Script
 bindsym $mod+n exec "~/Development/tools/i3-layout-manager/layout_manager.sh"
+bindsym $mod+x exec "~/Development/tools/i3-layout-manager/layout_manager.sh"
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+Shift+plus scratchpad show
+bindsym $mod+u floating disable; floating enable
+
+
 
 # others
 ## Journal bind
-bindsym $mod+shift+z exec "~/Development/tools/i3-scripts/wiki_journal.sh"
+bindsym $mod+shift+z  exec --no-startup-id "~/Development/tools/i3-scripts/wiki_journal.sh"
+bindsym $mod+shift+v exec --no-startup-id bash -c 'xdotool sleep 0.125 type --clearmodifiers --delay 125 "$(date +%r)"' && xdotool keyup ISO_Level3_Shift
 
+# pause chromium for taking notes
+bindsym $mod+m exec --no-startup-id ~/Development/tools/scripts/chromepause.sh
 # Added dec 2018
 bindsym $mod+t split toggle
-bindsym $mod+x layout toggle stacking splith
+bindsym $mod+Shift+x layout toggle stacking splith
 
 #bindsym Control+space exec  rofi -show-icons -show window
 
@@ -224,6 +257,11 @@ bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -b 'Yes, exit i3' 'i3-msg exit'"
 
+
+#kill program
+bindsym --whole-window $mod+shift+button2 kill 
+
+
 # Audio controls (now provided by Plasma)
 # bindsym XF86AudioLowerVolume exec ~/audio.sh --down
 # bindsym XF86AudioRaiseVolume exec ~/audio.sh --up
@@ -232,8 +270,10 @@ bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcu
 bar {
         verbose yes
        position bottom 
-#      status_command i3blocks
-#      i3bar_command i3bar -t
+mode hide
+    hidden_state hide
+    modifier Mod4
+    #      i3bar_command i3bar -t
 #        colors {
 #          statusline #ffffff
 #          background $transparent
@@ -244,10 +284,6 @@ bar {
 
 ###############STARTUP SCRIPTS#############################
 
-#Wallpaper
-exec --no-startup-id feh --bg-scale ~/Downloads/pandoc/serveimage.png
-#exec_always --no-startup-id nitrogen --restore
-
 
 ## Plasma Integration
 # Try to kill the wallpaper set by Plasma (it takes up the entire workspace and hides everythiing)
@@ -256,6 +292,11 @@ exec --no-startup-id wmctrl -c Plasma
 ## RESIZING ALL WINDOWS#########################################
 # Kill Plasma wallpaper 
 for_window [title="Desktop — Plasma"] kill, floating enable, border none
+
+#Wallpaper
+#exec --no-startup-id feh --bg-scale ~/Downloads/pandoc/serveimage.png
+exec_always --no-startup-id nitrogen --restore
+
 
 
 # KDE stuff
@@ -269,7 +310,9 @@ for_window [class="Plasma"] floating enable, border none
 for_window [title="plasma-desktop"] floating enable, border none
 for_window [title="Receiving file.*"] floating enable
 for_window [class="yakuake"] floating enable
-for_window [title="win7"] floating enable, border none
+for_window [class="apport-kde"] floating disable, border none
+
+
 
 # Browsers
 for_window [class="Chromium-browser"] resize set 70 ppt 0 px, border none
@@ -277,24 +320,37 @@ for_window [Class="dolphin"] resize set 30 ppt 0 px, border none
 for_window [title="Ungoogled Chromium Extension Installer"] floating enable, border none
 
 # programming
+for_window [title="musicforprogramming.net"] floating enable resize set 640 480, move position center
+
+
 for_window [Class="jetbrains-studio"] resize set 70 ppt 0 px, border none
 # Android studio preview
 for_window [title="Preview - .*"] border none, focus
 for_window [class="Sublime_text"] focus
 # terminal
-for_window [title="Terminator Preferences"] floating enable
 for_window [class="Terminator"] resize set 30 ppt 0 px, border none
+for_window [title=".*Emulator.*"] floating enable, move position center, focus
+
 # tools
-for_window [class="KeePass2"] resize set 20 ppt 0 px
+for_window [class="keepassxc"] resize set 20 ppt 0 px, focus
+
 for_window [Class="Ulauncher"] floating enable, border none
-for_window [class="Zeal"] resize set 30 ppt 0 px, border none
+for_window [class="Zeal"] resize set 30 ppt 0 px, border none, focus
+for_window [class="Nitrogen"] floating enable resize set 640 480, move position center
+for_window [class="mpv"] floating enable, move position center
+for_window [class="Peek"] floating enable
+for_window [title="Preferences$"] floating enable
+for_window [title="Edit Current"] floating disable, floating enable resize set 640 480, move position center
+for_window [title="Anki .*"] move to scratchpad
 
 # Float by type
-for_window [window_role="pop-up"] floating enable
+for_window [window_role="pop-up"] floating enable, move absolute center
+
 for_window [window_role="task_dialog"] floating enable
 for_window [window_type="dialog"] floating enable
 for_window [window_type="menu"] floating enable
 
+#no focus
 no_focus [class="plasmashell"]
 no_focus [window_role="pop-up"]
 no_focus [window_type="notification"]
@@ -452,25 +508,6 @@ mode "$mode_gaps_left" {
 }
 
 
-# Office
-
-
-set $mode_office Office (b) base, (c) calc, (d) draw, (g) global, (h) web, (i) impress, (l) libreoffice-menu, (m) math, (w) writer
-mode "$mode_office" {
-    bindsym b exec libreoffice --base, mode "default"
-    bindsym c exec libreoffice --calc, mode "default"
-    bindsym d exec libreoffice --draw, mode "default"
-    bindsym g exec libreoffice --global, mode "default"
-    bindsym h exec libreoffice --web, mode "default"
-    bindsym i exec libreoffice --impress, mode "default"
-    bindsym l exec libreoffice , mode "default"
-    bindsym m exec libreoffice --math, mode "default"
-    bindsym w exec libreoffice --writer, mode "default"
-    # back to normal: Enter or Escape
-    bindsym Return mode "default"
-    bindsym Escape mode "default"
-}
-bindsym $mod+o mode "$mode_office" workspace 1
 
 ######### Mod Docs Links###########################################
 #Mode Defaults
@@ -560,10 +597,11 @@ mode "$mode_system" {
 bindsym $mod+Pause mode "$mode_system"
 focus_on_window_activation none
 
+
 ## COLORS###########################################
 
 set $bg-color            #383C4A
-set $bd-color            #FFE900
+set $bd-color            #6D6D6D
 set $inactive-bg-color   #383C4A
 set $inactive-bd-color   #383C4A
 set $text-color          #f3f4f5
