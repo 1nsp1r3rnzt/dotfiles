@@ -188,7 +188,7 @@ bindsym $mod+shift+a [class="Anki"] scratchpad show, move position center
 bindsym $mod+shift+w [title="musicforprogramming.net"] floating enable resize set 640 480,scratchpad show, move position center
 ## I3 tools
 # Launch Layout Manager Script
-bindsym $mod+n exec "~/Development/tools/i3-layout-manager/layout_manager.sh"
+bindsym $mod+shift+n exec "~/Development/tools/i3-layout-manager/layout_manager.sh"
 bindsym $mod+x exec "~/Development/tools/i3-layout-manager/layout_manager.sh"
 bindsym $mod+Shift+minus move scratchpad
 bindsym $mod+Shift+plus scratchpad show
@@ -213,7 +213,8 @@ bindsym $mod+shift+m  exec --no-startup-id "snap run midori"
 
 bindsym $mod+shift+s  exec --no-startup-id "subl ~/.config/i3/config"
 
-
+# Android Tasker
+bindsym $mod+n  exec --no-startup-id "~/Development/tools/scripts/autoremote/videoplaypause.sh"
 
 #######SPLIT window modes bind##############################
 # split in horizontal orientation
@@ -341,7 +342,9 @@ for_window [class="mpv"] floating enable, move position center
 for_window [class="Peek"] floating enable
 for_window [title="Preferences$"] floating enable
 for_window [title="Edit Current"] floating disable, floating enable resize set 640 480, move position center
-for_window [title="Anki .*"] move to scratchpad
+#for_window [title="Anki .*"] move to scratchpad
+for_window [class="Anki"] move to scratchpad
+
 
 # Float by type
 for_window [window_role="pop-up"] floating enable, move absolute center
